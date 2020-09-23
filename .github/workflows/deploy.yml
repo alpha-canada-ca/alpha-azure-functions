@@ -1,4 +1,4 @@
-name: Deploy to AKS Cluster
+name: Deploy to Azure Functions
 on:
   push:
     branches:
