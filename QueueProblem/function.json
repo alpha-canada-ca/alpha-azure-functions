@@ -1,0 +1,21 @@
+﻿{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in",
+      "methods": [
+        "get",
+        "post"
+      ]
+    },
+    {
+      "name": "problemQueueItem",
+      "direction": "out",
+      "type": "queue",
+      "queueName": "problemqueue",
+      "connection": "AzureWebJobsStorage"
+    }
+  ]
+}

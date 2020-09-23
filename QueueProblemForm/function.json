@@ -1,0 +1,20 @@
+﻿{
+  "bindings": [
+    {
+      "authLevel": "anonymous",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in",
+      "methods": [
+        "post"
+      ]
+    },
+    {
+      "name": "problemQueueItem",
+      "direction": "out",
+      "type": "queue",
+      "queueName": "problemqueue",
+      "connection": "AzureWebJobsStorage"
+    }
+  ]
+}
