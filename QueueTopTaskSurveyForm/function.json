@@ -1,4 +1,4 @@
-﻿{
+{
   "bindings": [
     {
       "authLevel": "anonymous",
@@ -6,15 +6,14 @@
       "type": "httpTrigger",
       "direction": "in",
       "methods": [
+        "get",
         "post"
       ]
     },
     {
-      "name": "problemQueueItem",
-      "direction": "out",
-      "type": "queue",
-      "queueName": "problemqueue",
-      "connection": "AzureWebJobsStorage"
+      "name": "$return",
+      "type": "http",
+      "direction": "out"
     }
   ]
 }

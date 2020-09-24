@@ -6,4 +6,7 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
     </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="4.0.2.206221351" />
+    </ItemGroup>
 </Project>
