@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 
 public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
 {
