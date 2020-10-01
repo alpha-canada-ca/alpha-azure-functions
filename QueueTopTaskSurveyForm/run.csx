@@ -1,8 +1,5 @@
 
 #r "Newtonsoft.Json"
-#r "JWT.Algorithms"
-#r "JWT.Builder"
-
 using System;
 using System.Collections.Generic;
 using System.Configuration;
