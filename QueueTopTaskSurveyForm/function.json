@@ -11,9 +11,12 @@
       ]
     },
     {
-      "name": "$return",
-      "type": "http",
-      "direction": "out"
+      "name": "topTaskQueueItem",
+      "direction": "out",
+      "type": "queue",
+      "queueName": "toptaskqueue",
+      "connection": "AzureWebJobsStorage"
     }
+    
   ]
 }
