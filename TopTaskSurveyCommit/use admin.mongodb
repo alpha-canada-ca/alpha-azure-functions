@@ -1,0 +1,10 @@
+use admin
+db.createUser(
+  {
+    user: "admin",
+    pwd: "admin", // or cleartext password
+    roles: [ { role: "userAdminAnyDatabase", db: "admin" }, "readWriteAnyDatabase" ]
+  }
+)
+
+db.adminCommand( { restart: 1 } )

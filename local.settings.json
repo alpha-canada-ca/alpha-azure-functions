@@ -2,6 +2,12 @@
     "IsEncrypted": false,
     "Values": {
         "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-        "secretKey": "your-256-bit-secret"
+        "secretKey": "your-256-bit-secret",
+        "mongoDBConnectUrl": "127.0.0.1",
+        "mongoDBConnectPort": "27017",
+        "mongoDBDataBaseName": "toptasksurvey",
+        "mongoDBPassword": "admin",
+        "mongoDBUsername": "admin",
+        "ASPNETCORE_ENVIRONMENT": "Development"
     }
 }
