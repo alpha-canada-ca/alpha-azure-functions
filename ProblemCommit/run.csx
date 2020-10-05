@@ -100,7 +100,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         problem.dataOrigin = "ProblemCommit-WidgetVersion2";
                     }
                     
-                    if (problem.url.ToLower().Contains("/en/") || problem.url.ToLower().Contains("travel.gc.ca")) {
+                    if (problem.url.Contains("/en/")) {
                         problem.language = "en";
                     } else {
                         problem.language = "fr";
@@ -140,19 +140,17 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
         log.LogError(e.Message);
     }
 }
-
 public static MongoClient InitClient() {
     MongoClientSettings settings = new MongoClientSettings();
-    settings.Server = new MongoServerAddress(Environment.GetEnvironmentVariable("mongoDBConnectUrl"), Int32.Parse(Environment.GetEnvironmentVariable("mongoDBConnectPort")));
-    if(!Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT").Equals("Development")){
-        settings.UseTls = true;
-        settings.SslSettings = new SslSettings();
-        settings.SslSettings.EnabledSslProtocols = SslProtocols.Tls12;
-        settings.RetryWrites = false;
-        MongoIdentity identity = new MongoInternalIdentity("pagesuccess", Environment.GetEnvironmentVariable("mongoDBUsername"));
-        MongoIdentityEvidence evidence = new PasswordEvidence(Environment.GetEnvironmentVariable("mongoDBPassword"));
-        settings.Credential = new MongoCredential("SCRAM-SHA-1", identity, evidence); 
-    }
+    settings.Server = new MongoServerAddress("pagesuccess.mongo.cosmos.azure.com", 10255);
+    settings.UseTls = true;
+    settings.SslSettings = new SslSettings();
+    settings.SslSettings.EnabledSslProtocols = SslProtocols.Tls12;
+    settings.RetryWrites = false;
+    MongoIdentity identity = new MongoInternalIdentity("pagesuccess", "pagesuccess");
+    MongoIdentityEvidence evidence = new PasswordEvidence(Environment.GetEnvironmentVariable("MongoDBPassword"));
+    settings.Credential = new MongoCredential("SCRAM-SHA-1", identity, evidence);
     MongoClient client = new MongoClient(settings);
     return client;
 }
+
