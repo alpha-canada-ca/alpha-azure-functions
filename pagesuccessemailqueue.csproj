@@ -81,6 +81,21 @@
       <None Update="QueueTopTaskSurveyForm/run.csx">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+      <None Update="TopTaskSurveyCommit/function.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="TopTaskSurveyCommit/function.proj">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="TopTaskSurveyCommit/project.assets.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="TopTaskSurveyCommit/readme.md">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="TopTaskSurveyCommit/run.csx">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
       <None Update="local.settings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
