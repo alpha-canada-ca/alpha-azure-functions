@@ -39,7 +39,7 @@ enum WIDGET_VERSION_2 : int
 public static async Task Run(TimerInfo myTimer, ILogger log)
 {
     try {
-        // make static variable flag that says if one is running dont run it again
+
         string connectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
         QueueClient queue = new QueueClient(connectionString, "problemqueue");
 
