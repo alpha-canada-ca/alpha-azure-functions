@@ -19,10 +19,14 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
     var postData =  await req.ReadFormAsync();
     var missingFields = new List<string>();
     string queueData = "";
+    bool noComment = false;
     foreach (String fieldName in fieldNames)  
     { 
         String fieldData = postData[fieldName];
         log.LogInformation("Parsing: "+ fieldName + " value:"+fieldData);
+        if(fieldName == "details" && fieldData.Equals("")){
+            noComment = true;
+        }
         if (fieldData == null)
         {
             if (fieldName == "details" || fieldName == "problem") 
@@ -44,12 +48,15 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
     //Thu Aug 13 2020 19:56:59 GMT+0000 (Coordinated Universal Time)
     string pattern = "ddd MMM dd yyyy HH:mm:ss";
     queueData = DateTime.UtcNow.ToString(pattern)+" GMT+0000 (Coordinated Universal Time)" +";"+queueData;
-    if (missingFields.Any())
-    {
+    if (missingFields.Any()){
         var missingFieldsSummary = String.Join(", ", missingFields);
         log.LogInformation("Missing fields..." + missingFieldsSummary);
          new BadRequestObjectResult("Bad data....");
-    } else {
+    }
+    if(noComment){
+        log.LogInformation("Entry has no comment and will be disregarded.");
+    }
+    else {
         log.LogInformation(queueData);
         problemQueueItem.Add(queueData);
         log.LogInformation("Data queued successfully.");

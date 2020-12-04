@@ -1,0 +1,20 @@
+﻿{
+    "bindings": [{
+            "authLevel": "function",
+            "name": "req",
+            "type": "httpTrigger",
+            "direction": "in",
+            "methods": [
+                "get",
+                "post"
+            ]
+        },
+        {
+            "name": "topTaskQueueItem",
+            "direction": "out",
+            "type": "queue",
+            "queueName": "toptaskqueue",
+            "connection": "AzureWebJobsStorage"
+        }
+    ]
+}

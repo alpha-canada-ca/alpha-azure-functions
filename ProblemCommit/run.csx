@@ -124,6 +124,9 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         
                             if (problem.yesno.ToUpper().Equals("YES") && !problem.problemDetails.Trim().Equals("") )  {
                                 log.LogInformation("Problem is a YES with comments, it is spam, discarding... " + problem.yesno + " - " + problem.problemDetails);
+                            }
+                            if (problem.problemDetails.Equals("")) {
+                                log.LogInformation("Problem has no comment and will be disregarded.");
                             } else {
                                 problems.InsertOne(problem);
                                 log.LogInformation("Records saved. Problem ID:" + problem.id);
