@@ -30,7 +30,10 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                 log.LogInformation("Before replace of entity: "+decodedString);
                 decodedString = HttpUtility.HtmlDecode(decodedString);
                 log.LogInformation(decodedString);
-                //var origProblems = database.GetCollection<Problem>("originalproblem");var client = InitClient();
+               
+                string[] topTaskData = decodedString.Split(";");
+                log.LogInformation("Data size:" + topTaskData.Length);
+
                 log.LogInformation("Client initialized...");
                 var database = client.GetDatabase("pagesuccess");
                 var document = BsonSerializer.Deserialize<BsonDocument>(decodedString);

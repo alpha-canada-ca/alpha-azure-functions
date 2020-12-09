@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]HttpRequest req,ICollector<string> problemQueueItem, ILogger log)
 {
-    log.LogInformation("Date format:" + DateTime.UtcNow);
+    log.LogInformation("Date format:" + DateTime.Now.ToString("yyyy-MM-dd"));
     string[] fieldNames = {"institutionopt","themeopt","sectionopt","pageTitle","submissionPage","helpful","problem","details"};
     var postData =  await req.ReadFormAsync();
     var missingFields = new List<string>();
@@ -46,8 +46,8 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
     queueData = queueData.Substring(0,queueData.Length-1);
     //Thu Aug 13 2020 13:40:56 GMT+0000 (Coordinated Universal Time)
     //Thu Aug 13 2020 19:56:59 GMT+0000 (Coordinated Universal Time)
-    string pattern = "ddd MMM dd yyyy HH:mm:ss";
-    queueData = DateTime.UtcNow.ToString(pattern)+" GMT+0000 (Coordinated Universal Time)" +";"+queueData;
+
+    queueData = DateTime.Now.ToString("yyyy-MM-dd") +";"+queueData;
     if (missingFields.Any()){
         var missingFieldsSummary = String.Join(", ", missingFields);
         log.LogInformation("Missing fields..." + missingFieldsSummary);
