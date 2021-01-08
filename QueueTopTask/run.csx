@@ -1,6 +1,7 @@
 #r "Newtonsoft.Json"
 
 using System.Net;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -13,9 +14,20 @@ public static async Task<IActionResult> Run(HttpRequest req,ICollector<string> t
 {
     log.LogInformation("Email received.");
     var parser = new WebhookParser();
-    var inboundMail = parser.ParseInboundEmailWebhook(req.Body);
+
+    StreamReader reader = new StreamReader(req.Body);
+    string emailText = reader.ReadToEnd();
+    emailText = emailText.Replace(";", "; ");
+    // log.LogInformation(emailText);
+
+    byte[] byteArray = Encoding.ASCII.GetBytes(emailText);
+    MemoryStream stream = new MemoryStream(byteArray);
+
+
+
+    var inboundMail = parser.ParseInboundEmailWebhook(stream);
     log.LogInformation("Email parsed.");
-    var text = inboundMail.Text;
+    var text = inboundMail.Html;
     log.LogInformation("TopTask Queue Item: " + text);
     topTaskQueueItem.Add(text);
 

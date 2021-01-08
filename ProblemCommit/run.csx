@@ -125,10 +125,10 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             if (problem.yesno.ToUpper().Equals("YES") && !problem.problemDetails.Trim().Equals("") )  {
                                 log.LogInformation("Problem is a YES with comments, it is spam, discarding... " + problem.yesno + " - " + problem.problemDetails);
                             }
-                            if(problem.problemDate.Contains("GMT")){
-                                problem.problemDate = DateTime.Now.ToString("yyyy-MM-dd");
-                            }
-                            log.LogInformation("date converted: " + problem.problemDate);
+                         
+                            log.LogInformation("Date converted from: " + problem.problemDate + " to: " + DateTime.Now.ToString("yyyy-MM-dd"));
+                            problem.problemDate = DateTime.Now.ToString("yyyy-MM-dd");
+                            
                             if (problem.problemDetails.Equals("")) {
                                 log.LogInformation("Problem has no comment and will be disregarded.");
                             } else {
