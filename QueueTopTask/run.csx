@@ -18,9 +18,8 @@ public static async Task<IActionResult> Run(HttpRequest req,ICollector<string> t
     StreamReader reader = new StreamReader(req.Body);
     string emailText = reader.ReadToEnd();
     emailText = emailText.Replace(";", "; ");
-    // log.LogInformation(emailText);
 
-    byte[] byteArray = Encoding.ASCII.GetBytes(emailText);
+    byte[] byteArray = Encoding.UTF8.GetBytes(emailText);
     MemoryStream stream = new MemoryStream(byteArray);
 
 
