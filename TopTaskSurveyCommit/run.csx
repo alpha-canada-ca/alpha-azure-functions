@@ -12,7 +12,9 @@ using MongoDB.Bson.Serialization;
 using System.Security.Authentication;
 using System.Web;
 
-public static int timesLooped = 100;
+public static int timesToLoop = 100;
+
+public static int timesLooped = 0;
 public static async Task Run(TimerInfo myTimer, ILogger log)
 {
     try
@@ -21,7 +23,8 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
         QueueClient queue = new QueueClient(connectionString, "toptaskqueue");
 
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        for(int index = 0; index < timesLooped; index++){   
+        timesLooped = 0;
+        for(int index = 0; index < timesToLoop; index++){   
             QueueProperties properties = await queue.GetPropertiesAsync();
             if (properties.ApproximateMessagesCount > 0){
                 QueueMessage[] retrievedMessage = await queue.ReceiveMessagesAsync(1);
@@ -42,6 +45,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                     log.LogInformation("Client initialized...");
                     var database = client.GetDatabase("pagesuccess");
                     var topTasks = database.GetCollection<TopTask>("toptasksurvey");
+                    var topTasksBackup = database.GetCollection<TopTask>("toptasksurveybackup");
 
                     try
                     {
@@ -50,6 +54,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         {
                             log.LogInformation("Data retrieved has length of 24.");
                         
+                            toptask.timeStamp = topTaskdata[0];
                             toptask.dateTime = topTaskdata[0];
                             toptask.surveyReferrer = topTaskdata[1];
                             toptask.language = topTaskdata[2];
@@ -64,6 +69,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 toptask.grouping = topTaskdata[8];
                                 toptask.task = topTaskdata[9];
                                 toptask.taskOther = topTaskdata[10];
+                                log.LogInformation("Entry is Task 1");
                             }
                             //check if Department is not empty for task 2. Set task 2 data.
                             if(!topTaskdata[11].Equals(" / ")){
@@ -73,6 +79,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 toptask.grouping = topTaskdata[13];
                                 toptask.task = topTaskdata[14];
                                 toptask.taskOther = topTaskdata[15];
+                                log.LogInformation("Entry is task 2");
                             }
 
                             toptask.taskSatisfaction = topTaskdata[16];
@@ -116,9 +123,13 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         
                         toptask.dateTime = DateTime.Now.ToString("yyyy-MM-dd");
                         log.LogInformation("date converted: " + toptask.dateTime);
+
+                        log.LogInformation("timeStamp: " + toptask.timeStamp);
                         
                         topTasks.InsertOne(toptask);
+                        topTasksBackup.InsertOne(toptask);
                         log.LogInformation("Records saved. TopTask ID:" + toptask.id);
+                        timesLooped++;
 
                         // dequeue the database record.
                         // Delete the message

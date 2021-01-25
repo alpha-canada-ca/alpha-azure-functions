@@ -11,7 +11,8 @@ using MongoDB.Driver;
 using System.Security.Authentication;
 using System.Web;
 
-public static int timesLooped = 100;
+public static int timesToLoop = 100;
+public static int timesLooped = 0;
 
  enum WIDGET_VERSION_1 : int
 {
@@ -44,7 +45,8 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
         QueueClient queue = new QueueClient(connectionString, "problemqueue");
 
         var watch = System.Diagnostics.Stopwatch.StartNew();
-        for(int index = 0; index < timesLooped; index++){
+        timesLooped = 0;
+        for(int index = 0; index < timesToLoop; index++){
             QueueProperties properties = await queue.GetPropertiesAsync();
             if (properties.ApproximateMessagesCount > 0)
             {
@@ -138,6 +140,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 origProblems.InsertOne(origProblem);
                                 log.LogInformation("Original record has been saved.");
                             }
+                            timesLooped++;
                             
                             // dequeue the database record.
                             // Delete the message
