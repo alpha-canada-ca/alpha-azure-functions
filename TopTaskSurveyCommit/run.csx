@@ -45,7 +45,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                     log.LogInformation("Client initialized...");
                     var database = client.GetDatabase("pagesuccess");
                     var topTasks = database.GetCollection<TopTask>("toptasksurvey");
-                    var topTasksBackup = database.GetCollection<TopTask>("toptasksurveybackup");
+                    // var topTasksBackup = database.GetCollection<TopTask>("toptasksurveybackup");
 
                     try
                     {
@@ -127,7 +127,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         log.LogInformation("timeStamp: " + toptask.timeStamp);
                         
                         topTasks.InsertOne(toptask);
-                        topTasksBackup.InsertOne(toptask);
+                        // topTasksBackup.InsertOne(toptask);
                         log.LogInformation("Records saved. TopTask ID:" + toptask.id);
                         timesLooped++;
 

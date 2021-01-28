@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]HttpRequest req,ICollector<string> problemQueueItem, ILogger log)
 {
     log.LogInformation("Date format:" + DateTime.Now.ToString("yyyy-MM-dd"));
-    string[] fieldNames = {"institutionopt","themeopt","sectionopt","pageTitle","submissionPage","helpful","problem","details"};
+    string[] fieldNames = {"institutionopt","themeopt","sectionopt","pageTitle","submissionPage","helpful","problem","language","details"};
     var postData =  await req.ReadFormAsync();
     var missingFields = new List<string>();
     string queueData = "";
@@ -30,6 +30,10 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
         if (fieldData == null)
         {
             if (fieldName == "details" || fieldName == "problem") 
+            {
+                queueData += ";";
+            } 
+            if (fieldName == "language") 
             {
                 queueData += ";";
             } 

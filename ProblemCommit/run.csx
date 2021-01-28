@@ -34,6 +34,7 @@ enum WIDGET_VERSION_2 : int
     URL,
     YESNO,
     PROBLEM,
+    LANGUAGE,
     PROBLEM_DETAILS
 }
 
@@ -103,6 +104,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 problem.url = problemData[(int)WIDGET_VERSION_2.URL];
                                 problem.yesno = problemData[(int)WIDGET_VERSION_2.YESNO];
                                 problem.problem = problemData[(int)WIDGET_VERSION_2.PROBLEM];
+                                problem.language = problemData[(int)WIDGET_VERSION_2.LANGUAGE];
                                 for (int i = ((int)WIDGET_VERSION_2.PROBLEM_DETAILS); i < problemData.Length; i++) 
                                 {                   
                                     problem.problemDetails += problemData[i];
@@ -112,7 +114,8 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             
                             if (problem.url.ToLower().Contains("/en/") || problem.url.ToLower().Contains("travel.gc.ca")) {
                                 problem.language = "en";
-                            } else {
+                            } 
+                            if (problem.url.ToLower().Contains("/fr/") || problem.url.ToLower().Contains("voyage.gc.ca")){
                                 problem.language = "fr";
                             }
                             problem.resolutionDate = "";
