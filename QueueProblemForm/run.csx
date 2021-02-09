@@ -29,14 +29,10 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
         }
         if (fieldData == null)
         {
-            if (fieldName == "details" || fieldName == "problem") 
+            if (fieldName == "details" || fieldName == "problem" || fieldName == "language") 
             {
                 queueData += ";";
-            } 
-            if (fieldName == "language") 
-            {
-                queueData += ";";
-            } 
+            }
             else 
             {
                 missingFields.Add(fieldName);
