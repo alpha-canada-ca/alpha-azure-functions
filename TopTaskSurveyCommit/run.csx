@@ -68,7 +68,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             //check if Department is not empty for task 1 and is empty for task 2. Set task 1 data.
                             //the reason to check for " / " is because PP is sending bilingual values seperated by a slash
                             //if there is no data it still comes in as " / "
-                            if(!topTaskdata[5].Equals(" / ") && topTaskdata[11].Equals(" / ")){
+                            if((!topTaskdata[5].Equals(" / ") || !topTaskdata[5].Equals("")) && (topTaskdata[11].Equals(" / ") || topTaskdata[11].Equals(""))){
                                 toptask.dept        = topTaskdata[5];
                                 toptask.theme       = topTaskdata[6];
                                 toptask.themeOther  = topTaskdata[7];
@@ -78,7 +78,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 log.LogInformation("Entry is Task 1");
                             }
                             //check if Department is not empty for task 2. Set task 2 data.
-                            if(!topTaskdata[11].Equals(" / ")){
+                            if(!topTaskdata[11].Equals(" / ") || !topTaskdata[11].Equals("")){
                                 toptask.dept        = topTaskdata[11];
                                 toptask.theme       = topTaskdata[12];
                                 toptask.themeOther  = "";
