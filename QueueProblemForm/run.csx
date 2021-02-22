@@ -29,7 +29,7 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
         }
         if (fieldData == null)
         {
-            if (fieldName == "details" || fieldName == "problem" || fieldName == "language") 
+            if (fieldName == "details" || fieldName == "problem") 
             {
                 queueData += ";";
             }

@@ -58,7 +58,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         {
                             log.LogInformation("Data retrieved has length of 24.");
                         
-                            toptask.timeStamp       = topTaskdata[0];
+                           // toptask.timeStamp       = topTaskdata[0];
                             toptask.dateTime        = topTaskdata[0];
                             toptask.surveyReferrer  = topTaskdata[1];
                             toptask.language        = topTaskdata[2];
