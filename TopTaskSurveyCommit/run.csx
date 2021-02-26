@@ -37,9 +37,14 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                     string theMessage = retrievedMessage[0].MessageText;
                     byte[] data = Convert.FromBase64String(theMessage);
                     string decodedString = Encoding.UTF8.GetString(data);
-                    log.LogInformation("Before replace of entity: " + decodedString);
+                    
+
+                    decodedString = decodedString.Replace("<html><body><pre>", "");
+                    decodedString = decodedString.Replace("</pre></body></html>", "");
+                    
                     decodedString = HttpUtility.HtmlDecode(decodedString);
 
+                    log.LogInformation("decoded string: " + decodedString);
                     // split the decoded string by it's delimiter "~!~"
                     string[] topTaskdata = decodedString.Split("~!~");
                     // print the data size (number of fields)
