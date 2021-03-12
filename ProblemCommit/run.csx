@@ -100,7 +100,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 problem.url                 = problemData[(int)WIDGET_VERSION_3.URL];
                                 problem.yesno               = problemData[(int)WIDGET_VERSION_3.YESNO];
                                 problem.problem             = problemData[(int)WIDGET_VERSION_3.PROBLEM];
-                                problem.language            = problemData[(int)WIDGET_VERSION_3.LANGUAGE];
+                                problem.language            = problemData[(int)WIDGET_VERSION_3.LANGUAGE].ToLower();
                                 for (int i = ((int)WIDGET_VERSION_3.PROBLEM_DETAILS); i < problemData.Length; i++) 
                                 {                   
                                     problem.problemDetails += problemData[i];
