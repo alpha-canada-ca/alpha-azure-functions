@@ -15,6 +15,7 @@ public class Problem {
 	public String resolution { get; set; }
 	public String topic { get; set; }
 	public String problemDate { get; set; }
+	public String timeStamp { get; set; }
 	public String title { get; set; }
 	public String yesno {get; set; }
 	public String processed { get; set; }
