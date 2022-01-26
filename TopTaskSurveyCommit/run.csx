@@ -1,6 +1,7 @@
 #load "TopTask.csx"
 
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -128,8 +129,8 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             toptask.topTaskAirTableSynce    = "false";
                             toptask.personalInfoProcessed   = "false";
                             toptask.autoTagProcessed        = "false";
-                            toptask.dateTime                = DateTime.Now.ToString("yyyy-MM-dd");
-                            toptask.timeStamp               = DateTime.Now.ToString("HH:mm");
+                            toptask.dateTime                = DateTime.ParseExact(toptask.dateTime, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                            toptask.timeStamp               = DateTime.ParseExact(toptask.timeStamp, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("HH:mm");
 
                             topTasks.InsertOne(toptask);
                             log.LogInformation("Records saved. TopTask ID:" + toptask.id);

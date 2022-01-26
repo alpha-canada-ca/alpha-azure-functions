@@ -2,6 +2,7 @@
 #load "OriginalProblem.csx"
 
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using Azure.Storage.Queues;
 using Azure.Storage.Queues.Models;
@@ -111,7 +112,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             if (problemData.Length < 9) {
                                 log.LogInformation("Data retrieved has less than 9 fields so it must be version 1 of the widget.");
                                 problem.problemDate     = problemData[(int)WIDGET_VERSION_1.DATE];
-                                problem.timeStamp       = problemData[(int)WIDGET_VERSION_1.DATE]
+                                problem.timeStamp       = problemData[(int)WIDGET_VERSION_1.DATE];
                                 problem.title           = problemData[(int)WIDGET_VERSION_1.TITLE];
                                 problem.url             = problemData[(int)WIDGET_VERSION_1.URL];
                                 problem.yesno           = problemData[(int)WIDGET_VERSION_1.YESNO];
@@ -160,13 +161,14 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             if (problem.yesno.ToUpper().Equals("YES") && !problem.problemDetails.Trim().Equals("") )  {
                                 log.LogInformation("Problem is a YES with comments, it is spam, discarding... " + problem.yesno + " - " + problem.problemDetails);
                             }
-                         
-                            log.LogInformation("Date converted from: " + problem.problemDate + " to: " + DateTime.Now.ToString("yyyy-MM-dd"));
-                            problem.problemDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+                            problem.problemDate = DateTime.ParseExact(problem.problemDate, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+                            log.LogInformation("Date converted from: " + problem.problemDate);
                             
-                            log.LogInformation("Timestamp converted from: " + problem.timeStamp + " to: " + DateTime.Now.ToString("HH:mm"));
-                            problem.timeStamp = DateTime.Now.ToString("HH:mm");
                             
+                            problem.timeStamp = DateTime.ParseExact(problem.timeStamp, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("HH:mm");
+                            log.LogInformation("Timestamp converted to: " + problem.timeStamp);
+
                             if (problem.problemDetails.Equals("")) {
                                 log.LogInformation("Problem has no comment and will be disregarded.");
                             } else {
