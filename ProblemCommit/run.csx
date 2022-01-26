@@ -96,6 +96,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 problem.theme               = problemData[(int)WIDGET_VERSION_3.THEME];
                                 problem.section             = problemData[(int)WIDGET_VERSION_3.SECTION];
                                 problem.problemDate         = problemData[(int)WIDGET_VERSION_3.DATE];
+                                problem.timeStamp           = problemData[(int)WIDGET_VERSION_3.DATE];
                                 problem.title               = problemData[(int)WIDGET_VERSION_3.TITLE];
                                 problem.url                 = problemData[(int)WIDGET_VERSION_3.URL];
                                 problem.yesno               = problemData[(int)WIDGET_VERSION_3.YESNO];
@@ -110,6 +111,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             if (problemData.Length < 9) {
                                 log.LogInformation("Data retrieved has less than 9 fields so it must be version 1 of the widget.");
                                 problem.problemDate     = problemData[(int)WIDGET_VERSION_1.DATE];
+                                problem.timeStamp       = problemData[(int)WIDGET_VERSION_1.DATE]
                                 problem.title           = problemData[(int)WIDGET_VERSION_1.TITLE];
                                 problem.url             = problemData[(int)WIDGET_VERSION_1.URL];
                                 problem.yesno           = problemData[(int)WIDGET_VERSION_1.YESNO];
@@ -125,10 +127,11 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                            
                             if(problemData.Length == 9 || problemData.Length > 10) {
                                 log.LogInformation("Data retrieved has 9 or more fields so it must be version 2 of the widget.");
-                                problem.institution     =problemData[(int)WIDGET_VERSION_2.INSTITUTION];
-                                problem.theme           =problemData[(int)WIDGET_VERSION_2.THEME];
-                                problem.section         =problemData[(int)WIDGET_VERSION_2.SECTION];
+                                problem.institution     = problemData[(int)WIDGET_VERSION_2.INSTITUTION];
+                                problem.theme           = problemData[(int)WIDGET_VERSION_2.THEME];
+                                problem.section         = problemData[(int)WIDGET_VERSION_2.SECTION];
                                 problem.problemDate     = problemData[(int)WIDGET_VERSION_2.DATE];
+                                problem.timeStamp       = problemData[(int)WIDGET_VERSION_2.DATE];
                                 problem.title           = problemData[(int)WIDGET_VERSION_2.TITLE];
                                 problem.url             = problemData[(int)WIDGET_VERSION_2.URL];
                                 problem.yesno           = problemData[(int)WIDGET_VERSION_2.YESNO];
@@ -160,6 +163,9 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                          
                             log.LogInformation("Date converted from: " + problem.problemDate + " to: " + DateTime.Now.ToString("yyyy-MM-dd"));
                             problem.problemDate = DateTime.Now.ToString("yyyy-MM-dd");
+                            
+                            log.LogInformation("Timestamp converted from: " + problem.timeStamp + " to: " + DateTime.Now.ToString("HH:mm"));
+                            problem.timeStamp = DateTime.Now.ToString("HH:mm");
                             
                             if (problem.problemDetails.Equals("")) {
                                 log.LogInformation("Problem has no comment and will be disregarded.");

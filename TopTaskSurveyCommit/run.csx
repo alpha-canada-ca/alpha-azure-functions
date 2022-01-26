@@ -63,7 +63,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                         {
                             log.LogInformation("Data retrieved has length of 24.");
                         
-                           // toptask.timeStamp       = topTaskdata[0];
+                            toptask.timeStamp       = topTaskdata[0];
                             toptask.dateTime        = topTaskdata[0];
                             toptask.surveyReferrer  = topTaskdata[1];
                             toptask.language        = topTaskdata[2];
@@ -77,6 +77,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 toptask.dept        = topTaskdata[5];
                                 toptask.theme       = topTaskdata[6];
                                 toptask.themeOther  = topTaskdata[7];
+                                log.LogInformation("theme Other: " + toptask.themeOther);
                                 toptask.grouping    = topTaskdata[8];
                                 toptask.task        = topTaskdata[9];
                                 toptask.taskOther   = topTaskdata[10];
@@ -86,13 +87,15 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             if(!(topTaskdata[11].Equals(" / ") || topTaskdata[11].Equals(""))){
                                 toptask.dept        = topTaskdata[11];
                                 toptask.theme       = topTaskdata[12];
-                                toptask.themeOther  = "";
+                                toptask.themeOther  = topTaskdata[7];
+                                log.LogInformation("theme Other: " + toptask.themeOther);
                                 toptask.grouping    = topTaskdata[13];
                                 toptask.task        = topTaskdata[14];
                                 toptask.taskOther   = topTaskdata[15];
                                 log.LogInformation("Entry is task 2");
                             }
-
+                            toptask.themeOther  = topTaskdata[7];
+                            log.LogInformation("theme Other: " + toptask.themeOther);
                             toptask.taskSatisfaction    = topTaskdata[16];
                             toptask.taskEase            = topTaskdata[17];
                             toptask.taskCompletion      = topTaskdata[18];
@@ -126,6 +129,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             toptask.personalInfoProcessed   = "false";
                             toptask.autoTagProcessed        = "false";
                             toptask.dateTime                = DateTime.Now.ToString("yyyy-MM-dd");
+                            toptask.timeStamp               = DateTime.Now.ToString("HH:mm");
 
                             topTasks.InsertOne(toptask);
                             log.LogInformation("Records saved. TopTask ID:" + toptask.id);
