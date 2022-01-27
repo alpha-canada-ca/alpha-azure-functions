@@ -162,11 +162,11 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                                 log.LogInformation("Problem is a YES with comments, it is spam, discarding... " + problem.yesno + " - " + problem.problemDetails);
                             }
 
-                            problem.problemDate = DateTime.ParseExact(problem.problemDate, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-                            log.LogInformation("Date converted from: " + problem.problemDate);
+                            //format date & timestamps
+                            problem.problemDate = DateTime.Parse(problem.problemDate,CultureInfo.InvariantCulture).ToString("HH:mm");
+                            log.LogInformation("Date converted to: " + problem.problemDate);
                             
-                            
-                            problem.timeStamp = DateTime.ParseExact(problem.timeStamp, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("HH:mm");
+                            problem.timeStamp = DateTime.Parse(problem.timeStamp,CultureInfo.InvariantCulture).ToString("HH:mm");
                             log.LogInformation("Timestamp converted to: " + problem.timeStamp);
 
                             if (problem.problemDetails.Equals("")) {

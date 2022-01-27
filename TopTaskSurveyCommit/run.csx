@@ -129,9 +129,15 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             toptask.topTaskAirTableSynce    = "false";
                             toptask.personalInfoProcessed   = "false";
                             toptask.autoTagProcessed        = "false";
-                            toptask.dateTime                = DateTime.ParseExact(toptask.dateTime, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
-                            toptask.timeStamp               = DateTime.ParseExact(toptask.timeStamp, "yyyy-MM-dd HH:mm:ss.fff", CultureInfo.InvariantCulture).ToString("HH:mm");
 
+                             //format date & timestamps
+                            toptask.dateTime = DateTime.Parse(toptask.dateTime,CultureInfo.InvariantCulture).ToString("HH:mm");
+                            log.LogInformation("Date converted to: " + toptask.dateTime);
+                            
+                            toptask.timeStamp = DateTime.Parse(toptask.timeStamp,CultureInfo.InvariantCulture).ToString("HH:mm");
+                            log.LogInformation("Timestamp converted to: " + toptask.timeStamp);
+
+                            //save to DB
                             topTasks.InsertOne(toptask);
                             log.LogInformation("Records saved. TopTask ID:" + toptask.id);
 
