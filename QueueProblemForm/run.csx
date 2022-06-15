@@ -44,10 +44,8 @@ public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anon
         }
     }
     queueData = queueData.Substring(0,queueData.Length-1);
-    //Thu Aug 13 2020 13:40:56 GMT+0000 (Coordinated Universal Time)
-    //Thu Aug 13 2020 19:56:59 GMT+0000 (Coordinated Universal Time)
 
-    queueData = DateTime.Now.ToString("yyyy-MM-dd") +";"+queueData;
+    queueData = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") +";"+queueData;
     if (missingFields.Any()){
         var missingFieldsSummary = String.Join(", ", missingFields);
         log.LogInformation("Missing fields..." + missingFieldsSummary);

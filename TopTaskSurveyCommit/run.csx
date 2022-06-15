@@ -131,7 +131,7 @@ public static async Task Run(TimerInfo myTimer, ILogger log)
                             toptask.autoTagProcessed        = "false";
 
                              //format date & timestamps
-                            toptask.dateTime = DateTime.Parse(toptask.dateTime,CultureInfo.InvariantCulture).ToString("HH:mm");
+                            toptask.dateTime = DateTime.Parse(toptask.dateTime,CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
                             log.LogInformation("Date converted to: " + toptask.dateTime);
                             
                             toptask.timeStamp = DateTime.Parse(toptask.timeStamp,CultureInfo.InvariantCulture).ToString("HH:mm");
