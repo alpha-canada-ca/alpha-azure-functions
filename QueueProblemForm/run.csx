@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]HttpRequest req,ICollector<string> problemQueueItem, ILogger log)
 {
-    log.LogInformation("Date format:" + DateTime.Now.ToString("yyyy-MM-dd"));
+    log.LogInformation("Date format:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
     string[] fieldNames = {"institutionopt","themeopt","sectionopt","pageTitle","submissionPage","helpful","problem","language","details"};
     var postData =  await req.ReadFormAsync();
     var missingFields = new List<string>();
