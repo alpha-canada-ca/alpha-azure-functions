@@ -151,18 +151,23 @@ public static async Task Run(TimerInfo myTimer, ILogger log) {
             problem.personalInfoProcessed = "false";
             problem.autoTagProcessed      = "false";
 
+            // Not reciving Yes comments anymore.
+            // if (problem.yesno.ToUpper().Equals("YES") && !problem.problemDetails.Trim().Equals("")) {
+            //   log.LogInformation("Problem is a YES with comments, it is spam, discarding... " + problem.yesno + " - " + problem.problemDetails);
+            // }
+
             //format date & timestamps
             log.LogInformation("Date before conversion: " + problem.problemDate);
+            problem.problemDate = "Fri Jun 10 2022 19:05:21 GMT+0000 (Coordinated Universal Time)";
             try {
             problem.problemDate = DateTime.Parse(problem.problemDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+            problem.timeStamp = DateTime.Parse(problem.timeStamp, CultureInfo.InvariantCulture).ToString("HH:mm");
             } catch (Exception e) {
               log.LogError("Invalid date format. Converting to yyyy-MM-dd format.");
               problem.problemDate = DateTime.Now.ToString("yyyy-MM-dd");
+              problem.timeStamp = DateTime.Now.ToString("HH:mm");
             }
-
             log.LogInformation("Date converted to: " + problem.problemDate);
-
-            problem.timeStamp = DateTime.Parse(problem.timeStamp, CultureInfo.InvariantCulture).ToString("HH:mm");
             log.LogInformation("Timestamp converted to: " + problem.timeStamp);
 
             if (problem.problemDetails.Equals("") || problem.section.Contains("=") ||
