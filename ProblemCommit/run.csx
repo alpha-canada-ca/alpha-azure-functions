@@ -151,14 +151,15 @@ public static async Task Run(TimerInfo myTimer, ILogger log) {
             problem.personalInfoProcessed = "false";
             problem.autoTagProcessed      = "false";
 
-            // Not reciving Yes comments anymore.
-            // if (problem.yesno.ToUpper().Equals("YES") && !problem.problemDetails.Trim().Equals("")) {
-            //   log.LogInformation("Problem is a YES with comments, it is spam, discarding... " + problem.yesno + " - " + problem.problemDetails);
-            // }
-
             //format date & timestamps
             log.LogInformation("Date before conversion: " + problem.problemDate);
+            try {
             problem.problemDate = DateTime.Parse(problem.problemDate, CultureInfo.InvariantCulture).ToString("yyyy-MM-dd");
+            } catch (Exception e) {
+              log.LogError("Invalid date format. Converting to yyyy-MM-dd format.");
+              problem.problemDate = DateTime.Now.ToString("yyyy-MM-dd");
+            }
+
             log.LogInformation("Date converted to: " + problem.problemDate);
 
             problem.timeStamp = DateTime.Parse(problem.timeStamp, CultureInfo.InvariantCulture).ToString("HH:mm");
