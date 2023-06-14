@@ -7,9 +7,9 @@ using Newtonsoft.Json;
 using StrongGrid.Models;
 using StrongGrid.Models.Webhooks;
 using StrongGrid.Utilities;
-using StrongGrid; 
+using StrongGrid;
 
-public static async Task<IActionResult> Run(HttpRequest req,ICollector<string> problemQueueItem, ILogger log)
+public static async Task<IActionResult> Run(HttpRequest req, ICollector<string> problemQueueItem, ILogger log)
 {
     log.LogInformation("Email received.");
     var parser = new WebhookParser();
@@ -18,7 +18,7 @@ public static async Task<IActionResult> Run(HttpRequest req,ICollector<string> p
     var text = inboundMail.Text;
     log.LogInformation("Problem Queue Item: " + text);
     problemQueueItem.Add(text);
-    
-    
+
+
     return new OkResult();
 }

@@ -8,9 +8,9 @@ using Newtonsoft.Json;
 using StrongGrid.Models;
 using StrongGrid.Models.Webhooks;
 using StrongGrid.Utilities;
-using StrongGrid; 
+using StrongGrid;
 
-public static async Task<IActionResult> Run(HttpRequest req,ICollector<string> topTaskQueueItem, ILogger log)
+public static async Task<IActionResult> Run(HttpRequest req, ICollector<string> topTaskQueueItem, ILogger log)
 {
     log.LogInformation("Email received.");
     var parser = new WebhookParser();
