@@ -22,8 +22,9 @@ public static async Task<IActionResult> Run(
     // Logger to log events
     ILogger log)
 {
-    // Logging the current date
-    log.LogInformation("Date format: " + DateTime.Now.ToString("yyyy-MM-dd"));
+    // Logging the current date and time
+    log.LogInformation("Date and time format: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
+
 
     // Extract the User-Agent header from the request
     string userAgent = req.Headers["User-Agent"].ToString();
