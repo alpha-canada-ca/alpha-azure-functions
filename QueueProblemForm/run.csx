@@ -81,10 +81,10 @@ public static async Task<IActionResult> Run(
     }
 
     // Extract relevant data from payload
-    var timeStamp = DateTime.Now.ToString("HH:mm"); 
-    var date = DateTime.Now.ToString("yyyy-MM-dd");
-    
-    var submissionPage = payload["submissionPage"]; 
+    var timeStamp = DateTime.Now.ToString("HH:mm");
+    var date = DateTime.Now.ToString("yyyy-MM-dd"); 
+
+    var submissionPage = payload["submissionPage"];
     var language = payload["language"];
     var pageTitle = payload["pageTitle"];
     var institutionopt = payload["institutionopt"];
