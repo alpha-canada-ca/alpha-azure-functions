@@ -80,17 +80,16 @@ public static async Task < IActionResult > Run(
   var submissionPage = payload["submissionPage"];
   var language = payload["language"];
   var pageTitle = payload["pageTitle"];
-  var institutionopt = payload["institutionopt"];
-  var themeopt = payload["themeopt"];
-  var sectionopt = payload["sectionopt"];
+  var institutionopt = payload["institutionopt"].ToString().ToUpper();
+  var themeopt = payload["themeopt"].ToString().ToLower();
+  var sectionopt = payload["sectionopt"].ToString().ToLower();
   var problem = payload["problem"];
   var details = payload["details"].ToString().Replace(";", "");
   var helpful = payload["helpful"];
   var oppositeLang = payload["oppositelang"];
   var contact = payload["contact"];
 
-  //given a url that has this format: https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html can you extract the theme by grabbing the topic from after the /services/
-  //also the url can be different, only thing that is consistent is that the theme is after the /services/ and before the next /
+  //given a url that has this format: https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html extract the theme by grabbing the topic from after the /services/
   if (payload != null && payload.ContainsKey("submissionPage") && !StringValues.IsNullOrEmpty(payload["submissionPage"])) {
     string submissionPageValue = payload["submissionPage"].ToString();
     if (submissionPageValue.Contains("/services/")) {
