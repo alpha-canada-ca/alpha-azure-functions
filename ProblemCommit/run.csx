@@ -100,11 +100,10 @@ public static async Task Run(TimerInfo myTimer, ILogger log) {
               problem.contact = problemData[(int) WIDGET_ALL_FIELDS.CONTACT];
               problem.dataOrigin = "POST-REQUEST-WIDGET_ALL_FIELDS";
             } else if (problemData.Length == 9) {
-              log.LogInformation("Date before conversion: " + problem.problemDate);
-
-              problem.institution = problemData[(int) WIDGET_EMAIL_VERSION.INSTITUTION].ToUpper();
-              problem.theme = problemData[(int) WIDGET_EMAIL_VERSION.THEME].ToLower();
-              problem.section = problemData[(int) WIDGET_EMAIL_VERSION.SECTION].ToLower();
+              log.LogInformation("Date before conversion: " + problem.problemDate); 
+              problem.institution = problemData[(int) WIDGET_EMAIL_VERSION.INSTITUTION].ToUpper().Trim();
+              problem.theme = problemData[(int) WIDGET_EMAIL_VERSION.THEME].ToLower().Trim();
+              problem.section = problemData[(int) WIDGET_EMAIL_VERSION.SECTION].ToLower().Trim();
               problem.problemDate = DateTime.UtcNow.ToString("yyyy-MM-dd");
               problem.timeStamp = DateTime.UtcNow.ToString("HH:mm");
               problem.title = problemData[(int) WIDGET_EMAIL_VERSION.TITLE];
