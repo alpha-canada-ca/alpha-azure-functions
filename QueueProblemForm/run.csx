@@ -80,9 +80,9 @@ public static async Task < IActionResult > Run(
   var submissionPage = payload["submissionPage"];
   var language = payload["language"];
   var pageTitle = payload["pageTitle"];
-  var institutionopt = payload["institutionopt"].ToString().ToUpper();
-  var themeopt = payload["themeopt"].ToString().ToLower();
-  var sectionopt = payload["sectionopt"].ToString().ToLower();
+  var institutionopt = payload["institutionopt"].ToString().ToUpper().Trim();
+  var themeopt = payload["themeopt"].ToString().ToLower().Trim();
+  var sectionopt = payload["sectionopt"].ToString().ToLower().Trim();
   var problem = payload["problem"];
   var details = payload["details"].ToString().Replace(";", "");
   var helpful = payload["helpful"];
