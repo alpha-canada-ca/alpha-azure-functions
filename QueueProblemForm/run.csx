@@ -77,7 +77,7 @@ public static async Task < IActionResult > Run(
   var timeStamp = DateTime.UtcNow.ToString("HH:mm");
   var date = DateTime.UtcNow.ToString("yyyy-MM-dd");
 
-  var submissionPage = payload["submissionPage"];
+  var submissionPage = payload["submissionPage"].ToString().Replace(";", " ");
   var language = payload["language"];
   var pageTitle = payload["pageTitle"];
   var institutionopt = payload["institutionopt"].ToString().ToUpper().Trim();
