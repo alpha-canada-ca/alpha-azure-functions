@@ -13,6 +13,7 @@ using System.IO;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 public static async Task<IActionResult> Run(HttpRequest req, ICollector<string> topTaskQueueItem, ILogger log)
 {
