@@ -15,13 +15,14 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 
 // Main function to be run on trigger
-public static async Task < IActionResult > Run(
+public static async Task<IActionResult> Run(
   // Triggering on an HTTP POST request
   [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req,
   // Queue to add problems to
-  ICollector < string > problemQueueItem,
+  ICollector<string> problemQueueItem,
   // Logger to log events
-  ILogger log) {
+  ILogger log)
+{
   // Logging the current date and time
   log.LogInformation("Date and time format: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm"));
 
@@ -32,7 +33,8 @@ public static async Task < IActionResult > Run(
   string browserVersion = "Unknown";
 
   // If User-Agent string is not empty
-  if (!string.IsNullOrEmpty(userAgent)) {
+  if (!string.IsNullOrEmpty(userAgent))
+  {
     // Define regex patterns for device type and browser version
     string devicePattern = @"(iPad|iPhone|Android|Windows Phone|Windows NT|Linux|Macintosh|Windows)";
     string browserPattern = @"(MSIE|Trident|Edge|Chrome|Firefox|Safari)(?:\/([\d\.]+))?";
@@ -42,10 +44,12 @@ public static async Task < IActionResult > Run(
     Match browserMatch = Regex.Match(userAgent, browserPattern, RegexOptions.IgnoreCase);
 
     // If matches found, assign values
-    if (deviceMatch.Success) {
+    if (deviceMatch.Success)
+    {
       deviceType = deviceMatch.Value;
     }
-    if (browserMatch.Success) {
+    if (browserMatch.Success)
+    {
       browserVersion = browserMatch.Value;
     }
   }
@@ -57,7 +61,7 @@ public static async Task < IActionResult > Run(
   var payload = await req.ReadFormAsync();
 
   // Define required fields
-  List < string > requiredFields = new List < string > {
+  List<string> requiredFields = new List<string> {
     "submissionPage",
     "pageTitle",
     "institutionopt",
@@ -67,7 +71,8 @@ public static async Task < IActionResult > Run(
 
   // Check if any required fields are missing
   var missingFields = requiredFields.Except(payload.Keys);
-  if (missingFields.Any()) {
+  if (missingFields.Any())
+  {
     // If any required fields are missing, log and return error
     log.LogInformation($"Missing required fields: {string.Join(", ", missingFields)}");
     return new BadRequestObjectResult($"Missing required fields: {string.Join(", ", missingFields)}");
@@ -90,13 +95,17 @@ public static async Task < IActionResult > Run(
   var contact = payload["contact"];
 
   //given a url that has this format: https://www.canada.ca/en/revenue-agency/services/tax/businesses/topics/gst-hst-businesses.html extract the theme by grabbing the topic from after the /services/
-  if (payload != null && payload.ContainsKey("submissionPage") && !StringValues.IsNullOrEmpty(payload["submissionPage"])) {
+  if (payload != null && payload.ContainsKey("submissionPage") && !StringValues.IsNullOrEmpty(payload["submissionPage"]))
+  {
     string submissionPageValue = payload["submissionPage"].ToString();
-    if (submissionPageValue.Contains("/services/")) {
+    if (submissionPageValue.Contains("/services/"))
+    {
       string[] parts = submissionPageValue.Split("/services/");
-      if (parts.Length > 1) {
+      if (parts.Length > 1)
+      {
         string[] themeParts = parts[1].Split("/");
-        if (themeParts.Length > 0) {
+        if (themeParts.Length > 0)
+        {
           string theme = themeParts[0];
           themeopt = theme;
         }
@@ -105,12 +114,14 @@ public static async Task < IActionResult > Run(
   }
 
   // Check if details field is empty or pageTitle/submissionPage fields are empty
-  if (string.IsNullOrWhiteSpace(details)) {
+  if (string.IsNullOrWhiteSpace(details))
+  {
     // If empty, log the information and return Ok
     log.LogInformation("Entry has no comment and will be disregarded.");
     return new OkObjectResult("Data received...");
   }
-  if (string.IsNullOrWhiteSpace(pageTitle) || string.IsNullOrWhiteSpace(submissionPage)) {
+  if (string.IsNullOrWhiteSpace(pageTitle) || string.IsNullOrWhiteSpace(submissionPage))
+  {
     // If empty, log the information and return error
     log.LogInformation("Bad data...");
     return new BadRequestObjectResult("Bad data....");
@@ -119,6 +130,10 @@ public static async Task < IActionResult > Run(
   // Create a string with the extracted data
   var queueData = $"{timeStamp};{date};{submissionPage};{language};{oppositeLang};{pageTitle};{institutionopt};{themeopt};{sectionopt};{problem};{details};{helpful};{deviceType};{browserVersion};{contact}";
 
+  var queueDataLength = queueData.Split(';').Length;
+
+  // To print the length
+  Console.WriteLine("Number of items in queueData: " + queueDataLength);
   // Add the data string to the queue
   log.LogInformation(queueData);
   problemQueueItem.Add(queueData);
