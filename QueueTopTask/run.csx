@@ -48,20 +48,31 @@ public static async Task<IActionResult> Run(HttpRequest req, ICollector<string> 
 
     log.LogInformation($"Device Type: {deviceType}");
 
-    // Rest of your Azure Function code...
-    var parser = new WebhookParser();
-    StreamReader reader = new StreamReader(req.Body);
-    string emailText = await reader.ReadToEndAsync();
-    emailText = emailText.Replace(";", "; ");
+    try
+    {
+        var parser = new WebhookParser();
+        using (StreamReader reader = new StreamReader(req.Body))
+        {
+            string emailText = await reader.ReadToEndAsync();
+            emailText = emailText.Replace(";", "; ");
 
-    byte[] byteArray = Encoding.UTF8.GetBytes(emailText);
-    MemoryStream stream = new MemoryStream(byteArray);
-    var inboundMail = parser.ParseInboundEmailWebhook(stream);
+            byte[] byteArray = Encoding.UTF8.GetBytes(emailText);
+            using (MemoryStream stream = new MemoryStream(byteArray))
+            {
+                var inboundMail = parser.ParseInboundEmailWebhook(stream);
 
-    log.LogInformation("Email parsed.");
-    var text = inboundMail.Html;
-    log.LogInformation("TopTask Queue Item: " + text);
-    topTaskQueueItem.Add(text);
+                log.LogInformation("Email parsed.");
+                var text = inboundMail.Html;
+                log.LogInformation("TopTask Queue Item: " + text);
+                topTaskQueueItem.Add(text);
+            }
+        }
 
-    return new OkResult();
+        return new OkResult();
+    }
+    catch (Exception ex)
+    {
+        log.LogError(ex, "An error occurred while processing the email.");
+        return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+    }
 }

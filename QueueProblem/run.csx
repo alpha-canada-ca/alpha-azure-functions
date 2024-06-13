@@ -32,6 +32,6 @@ public static async Task<IActionResult> Run(HttpRequest req, ICollector<string> 
     log.LogInformation("Problem Queue Item: " + text);
     problemQueueItem.Add(text);
 
-
+    log.LogInformation("Data queued successfully.");
     return new OkResult();
 }
