@@ -133,7 +133,7 @@ public static async Task<IActionResult> Run(
   var queueDataLength = queueData.Split(';').Length;
 
   // To print the length
-  Console.WriteLine("Number of items in queueData: " + queueDataLength);
+  log.LogInformation("Number of items in queueData: " + queueDataLength);
   // Add the data string to the queue
   log.LogInformation(queueData);
   problemQueueItem.Add(queueData);
