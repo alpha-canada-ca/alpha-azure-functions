@@ -5,5 +5,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
+        <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.1.32" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="3.1.32" />
     </ItemGroup>
 </Project>

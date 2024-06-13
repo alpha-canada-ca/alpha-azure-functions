@@ -1,4 +1,7 @@
 #r "Newtonsoft.Json"
+#r "Microsoft.Extensions.Primitives"
+#r "Microsoft.AspNetCore.Http.Features"
+
 using System;
 using System.Net;
 using System.Net.Http;
@@ -57,7 +60,7 @@ public static async Task<IActionResult> Run(
   if (missingFields.Any())
   {
     log.LogWarning($"Missing required fields: {string.Join(", ", missingFields)}");
-    return new BadRequestObjectResult($"Missing required fields: {string.join(", ", missingFields)}");
+    return new BadRequestObjectResult($"Missing required fields: {string.Join(", ", missingFields)}");
   }
 
   var timeStamp = DateTime.UtcNow.ToString("HH:mm");
